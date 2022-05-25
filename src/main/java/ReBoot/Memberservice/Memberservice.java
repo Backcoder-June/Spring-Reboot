@@ -13,10 +13,10 @@ public class Memberservice {
 
 
   //  @Autowired
-    private final interfacerepository interfacerepository;
+    private final interfacerepository interfaceRepository;
 
-    public Memberservice(ReBoot.Memberrepository.interfacerepository interfacerepository) {
-        this.interfacerepository = interfacerepository;
+    public Memberservice(interfacerepository interfaceRepository) {
+        this.interfaceRepository = interfaceRepository;
     }
 
 
@@ -24,22 +24,22 @@ public class Memberservice {
 
         PreventSameName(member);
 
-        interfacerepository.save(member);
+        interfaceRepository.save(member);
         return member.getId();
     }
 
     private void PreventSameName(Member member) {
-        interfacerepository.findByName(member.getName()).ifPresent(member1 ->
+        interfaceRepository.findByName(member.getName()).ifPresent(member1 ->
         {throw new IllegalStateException("이미 존재하는 회원입니다.");});
     }
 
 
     public List<Member> findmembers(){
-        return interfacerepository.findAll();
+        return interfaceRepository.findAll();
     }
 
     public Optional<Member> findone(Long memberid){
-        return interfacerepository.findById(memberid);
+        return interfaceRepository.findById(memberid);
     }
 
 //

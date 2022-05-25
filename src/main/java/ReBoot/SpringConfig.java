@@ -1,6 +1,7 @@
 package ReBoot;
 
 
+//import ReBoot.AOP.TimetraceAOP;
 import ReBoot.Memberrepository.interfacerepository;
 import ReBoot.Memberservice.Memberservice;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +45,11 @@ public class SpringConfig {
 
     }
 */
-
-
+/*      //AOP class 직접 Bean 등록 - 하나 더 작업 해줘야한다.
+    @Bean
+    public TimetraceAOP timetraceAOP(){
+        return new TimetraceAOP();
+    }
+*/
 
 }

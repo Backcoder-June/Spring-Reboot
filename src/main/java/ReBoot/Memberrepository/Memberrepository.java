@@ -13,6 +13,12 @@ public class Memberrepository implements interfacerepository{
 
     private static long sequence = 0L;
 
+    public void clearman(){
+        store.clear();
+    }
+
+
+
 
 
     @Override

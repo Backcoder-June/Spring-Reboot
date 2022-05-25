@@ -7,8 +7,8 @@ resource - static package - file.html  만들고
 
 2. API 방식 web 개발 (Model, html, template 안씀)
 
-@Controller 은 필요
-@ResponseBody  **
+@Controller 필요
+@ResponseBody  **필수
 
 @GetMapping("Url")
 public String helloAPI(@RequestParam("promise") String whatever{
@@ -54,11 +54,12 @@ localhost:8080/url?promise=whatever
  완료
 
 
-5. JPA repository 로 바꿔치기   ( JPA 는 EntityManager 로 모든게 동작한다 )
+5. JPA repository 로 바꿔치기   ( JPA repository 는 EntityManager 로 모든게 동작한다 )
 ** 기본세팅 : Jpa Library 추가하기 / properties 에 JPA 관련 특성추가하기
 (1) domain class 에  @Entity(javax)  Mapping 하기
 (2) domain 데이터 "id" 에 @Id(javax) / @GeneratedValue(javax)(stratge = GenerationType.IDENTITY) 추가하기
 (3) Service 계층에 @Transactional(org!!) 추가하기
+                                                - 여기까지는 springdata JPA 도 동일하다
 (4) JPA repository class 에 private final EntityManager em; 생성자; EntityManager(em) 소환하기 -> overriding(interface)
 (5) config 에서 바꿔치기 (EntityManager 소환필요)
     private EntityManager em; @Autowired 생성자;
@@ -67,7 +68,7 @@ localhost:8080/url?promise=whatever
 
 
 6. Spring data JPA repository 로 바꿔치기
-** JPA 설정과 같은 세팅
+** JPA 설정과 같은 세팅 (@Entity @Id @GeneratedValue @Transactional(org) )
 (1) interface 로 repository 생성
 (2) extends JpaRepository<Member, Long>(Spring data 제공), interfacerepository (다중 상속)
 (3) overriding - save, findByName, findById, findAll ( 전부 interfacerepository 거 가져오기만 하면 끝)
@@ -77,3 +78,110 @@ localhost:8080/url?promise=whatever
    @Bean Memberservice membs(){return new Memberservice(interfacerepository);}
  끝
 
+
+7. AOP class 만들기 ( cross-cutting concern / core concern )
+(1) AOP package 만들고 원하는 공통관심사항 class 생성
+(2) class 에 @Aspect  <- AoP class 임을 알려줌
+(3) @Component <- Bean 으로 등록 ( Config 에서 직접해도 되지만 한가지 작업을 더해줘야한다 )
+(4) method 만들고
+(5) method 에 @Around("execution( * 상위패키지.원하는패키지.*(.원하는클래스.))")  로 적용할 대상 선택지정
+ 끝
+
+Controller -> [[AOP class -> Proxy 복제 service/repository -> AOP 결과물]] -> 진짜 service/repository  진행
+
+
+8. test case 만들기
+*같은 package 이름, 같은 class명+test => 계층에 가서 Ctrl + Shift + T
+(1) testclass 안에서 실험하고싶은 계층 (Service, repository 등) 소환
+    Memberrepository A = new Memberrepository();
+
+(1.5) Service 계층 소환 할때는, repository 를 달고 들어와야하기 때문에, DI 로 해줘야 한다.
+      Memberservice memberservice;
+      Memberrepository memberrepository;   선언만 해주고
+
+   ** @BeforeEach
+      public void beforeeach(){
+              memberrepository = new Memberrepository();
+              memberservice = new Memberservice(memberrepository);  이렇게 담아야 담긴다.
+
+
+(2) 도메인 class 객체 생성 -> 이걸로 실험을 해야함
+    member.setname("june");
+(3) 소환한 계층의 method 들 사용해보기
+    @Test
+    public void save{
+    A.save(member);      }=> 작동시 초록불
+(4) 확실한 test 를 짜보기 (Boolean / Assertthat) - //given  //when //then
+    assertthat(x).isEqualto(y);        => 작동시 같다는 의미.
+
+(5) clearman 만들기 - 실험하는 해당 계층 class 에
+    public void clearmain() { store.clear();} -> AfterEach 와 연계
+    Test class 에
+    @AfterEach
+    public void aftech(){ A.clearman();}
+
+(6) Exception 넣어둔 부분 test
+  [1] try catch
+  [2] assertThrows        Exception종류.class   , 람다 (어떤로직) ->  m2가 조인하는 logic => 해당 Exception 이 터져요
+        assertThrows(IllegalStateException.class, () -> memberservice.Join(m2));
+
+
+9. Spring Integration Test -  스프링 컨테이너랑 함께 통합 test -> DB 까지 실제로 올라감
+(1) @SpringBootTest  -> SpringBoot 랑 같이 통합 test 할게요!
+(2) @Transactional   -> Test가 끝나면 DB date 롤백(초기화)              => @AfterEach(X)
+(3) Service/Repository 소환할 때, 닥 @Autowired 로 제낌 (DI new 안씀)   => @BeforeEach(X)
+     @Autowired Memberservice memberservice;
+     @Autowired interfacerepository memberrepository; ( 주의*interface - 구현체 )
+(4) 나머지는 그냥 test case 랑 똑같음
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+999. Acronym
+
+JPA - Java Persistence Api
+
+JPQL - Java Persistence Query Language
+
+JDBC - Java DB Connectivity
+
+ORM - Object Relational Mapping
+
+RDB - Realtional DB
+
+SQL - Structured Query Language
+
+DDL - Data Definition Language
+DML - Data Manipulation Language
+DCL - Data Control Language
+
+CRUD - Create Read Update Delete
+
+DI - Dependency Injection
+
+AOP - Aspect Oriented Programming
+
+IOC - Inversion OF Control
+
+WAS - Web Application Server
+
+TDD - Test Driven Development
+
+AJAX - Asynchronous Javascript And Xml
+
+JSP - Jacarta Server Pages
+
+JSTL - Jsp Standard Tag Library
+
+POJO - Plain Old Java Object

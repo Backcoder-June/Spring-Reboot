@@ -22,7 +22,7 @@ public class MemberController {
 
 
     @GetMapping("/members/new")
-    public String Joining(){
+    public String Joinpage(){
         return "members/Joining";
     }
 
