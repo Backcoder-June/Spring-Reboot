@@ -1,0 +1,79 @@
+1. static contents web 개발
+
+resource - static package - file.html  만들고
+
+=> localhost:8080/file.html
+
+
+2. API 방식 web 개발 (Model, html, template 안씀)
+
+@Controller 은 필요
+@ResponseBody  **
+
+@GetMapping("Url")
+public String helloAPI(@RequestParam("promise") String whatever{
+return "juststringman" + whatever;}
+
+** Json 방식 {"jasonsaidthat":"thisishowhetalks."}
+- 똑같은데 그냥 return 이 String 이 아니라 c1 같은 객체로 받는것.
+먼저 사용할 static class 를 하나 만들고
+그 class datatype 으로 취하는 method 를 만들면서 api랑 똑같이 하면됨.
+(c1 객체화 하고 return c1; 이 되게끔.)
+
+
+3. MVC web - Template Engine 활용
+ Controller  - Model   -  Template(View)
+@Controller
+@GetMapping("URL") => 이 method 를 호출, 실행한다.
+public String welcome(Model model){        //기본 data type - String
+model.addAttribute("key" , "value");       //"key" 는 html 의 $ 와 연결 되있는 값
+ return "file이름만(.html)";
+ }
+localhost:8080/url
+
+* @RequestParam 사용법  @RequestParam(value="promise", required=true)
+public String welcome (@RequestParam("Url-promise") String whatever, Model model){
+model.addAttribute("html-key" , whatever);
+localhost:8080/url?promise=whatever
+
+
+4. 예제 - 회원 등록, 조회 web 개발
+순서
+(1) domain 생성 - 다 가져다쓸 class, Name, Id
+(2) interface repository 생성  - save, findbyid, findbyname, findall 만들 기본 기술들
+(3) 구현체 repository 생성 - 위에거만 구현
+(4) service 생성 - 기본 기술들 활용해서 service 로 사용할 큼지막한 기술 join, findmembers구현
+(5) Controller - 화면 구현 View 하고 연결 (Template)
+                 service의 기술들 join, findmembers 을 화면별로 적용(url 이용)
+(6) @Component(@Service,Repository) / Config @Bean  둘중 하나 사용해서 Spring container 연결(DI)
+
+-- 까지가 java 내에서 서비스 구현이 된거고 (memory 로는 실행 가능)
+(7) 이걸 DB 에 넣으려면 구현 repository 를 Query 언어로
+    JDBC Template / JPA / Spring data JPA 등으로 바꿔줘야 한다.
+(8) Config 에서 repository return new 값 바꿔치기
+ 완료
+
+
+5. JPA repository 로 바꿔치기   ( JPA 는 EntityManager 로 모든게 동작한다 )
+** 기본세팅 : Jpa Library 추가하기 / properties 에 JPA 관련 특성추가하기
+(1) domain class 에  @Entity(javax)  Mapping 하기
+(2) domain 데이터 "id" 에 @Id(javax) / @GeneratedValue(javax)(stratge = GenerationType.IDENTITY) 추가하기
+(3) Service 계층에 @Transactional(org!!) 추가하기
+(4) JPA repository class 에 private final EntityManager em; 생성자; EntityManager(em) 소환하기 -> overriding(interface)
+(5) config 에서 바꿔치기 (EntityManager 소환필요)
+    private EntityManager em; @Autowired 생성자;
+    return new JPAmemberrepository(em);
+완료
+
+
+6. Spring data JPA repository 로 바꿔치기
+** JPA 설정과 같은 세팅
+(1) interface 로 repository 생성
+(2) extends JpaRepository<Member, Long>(Spring data 제공), interfacerepository (다중 상속)
+(3) overriding - save, findByName, findById, findAll ( 전부 interfacerepository 거 가져오기만 하면 끝)
+(4) config 연결 - EntityManager 같은거 다 필요없고, Service 랑 interfacerepository 만 연결시켜주면 됨
+               - Springdata Jpa memberrepository 는 Jpa Repository extends 할 때, 자동으로 Bean 으로 등록됨.
+   private final interfacereposit interface; @Autowired 생성자;
+   @Bean Memberservice membs(){return new Memberservice(interfacerepository);}
+ 끝
+
