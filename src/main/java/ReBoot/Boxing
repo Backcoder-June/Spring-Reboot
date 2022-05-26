@@ -168,6 +168,8 @@ DCL - Data Control Language
 
 CRUD - Create Read Update Delete
 
+RDMS - Raw Data Management System
+
 DI - Dependency Injection
 
 AOP - Aspect Oriented Programming
@@ -185,3 +187,9 @@ JSP - Jacarta Server Pages
 JSTL - Jsp Standard Tag Library
 
 POJO - Plain Old Java Object
+
+HTTP - Hyper Text Transfer Protocol
+
+PHP - Hypertext PreProcessor
+
+AWS - Amazon Web Services
