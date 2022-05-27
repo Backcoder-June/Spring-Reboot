@@ -148,23 +148,134 @@ Controller -> [[AOP class -> Proxy 복제 service/repository -> AOP 결과물]] 
 
 
 
+777. method 잡기술
+
+(1).length()  -  글자수 및 기본 array 숫자
+(2).size()  -  ArrayList 등 Collection Framework 에서 element 숫자
+
+(3).replace(A, B)  -  다 완성된 문장따위에서 교환
+
+(4).equals()  -  String 비교
+
+(5)Integer.toString() - Int to String Casting
+   Integer.parseInt() - String to Int Casting
+
+(6)args[0];  -  configuration - 인자값 순서대로 ( 띄어쓰기로만 구별 ) / main(Stirng[] args) /
+
+(7)switch(x){
+case 1 :    ;break;
+case 2 :    ;beak;
+default : sout("목록에 없습니다"); }
+
+(8) if(  ( A||B||C )  &&  D  )    - ABC 부분 () 로 묶어줘야 함
+
+(9) for(){if(){continue;}            <- 그 부분만 띄어넘고 계속 진행해
+          sout();
+          if(){break;}  }
+
+(10) Array
+     String[] members = new members[length];
+     members[0] = "Jack";
+
+(11) foreach
+for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}       //돌릴배열집합을 새로운변수 에 하나하나 담아주고, 그때마다 작동
+
+(12) output += a;    =>  output = output + a ;
+
+(13) Scanner parrot = new Scanner(Systme.in);
+     while(parrot.hasNextLine){sout(parrot.nextLine +"라구요?");} parrot.close();
+
+(14) File fi = new File("out.txt");
+     Scanner parrot = new Sacnner(fi);
+
+(15) static -> method, variables -> class member
+
+     public/private/default/protected -> method, variables -> class/package  +  scope
+
+     => public static void sum(){}
+
+     class -> public / default  (package)
+     => public class calculator{}
+
+(16) Overloading - parameter 개수 / data type 에 따라 자동호출 시스템
+
+(17) Overriding - [1] super class 에 생성자 안만들고 sub clss 에서 만들기
+                  [2] 이미 만들었다면 sub 에서 생성자 parameter 까지만 맞추고 super(a,b); 해주면 끝
+
+(18) super
+     (int a, int b) {super(a, b);}    - 생성자 상속 땡겨오기
+     return super.sum();   -   메소드 상속,overriding 할때 그대로 땡겨오기
+
+(19) abstract -> class/method       ->  상속 필수 / overriding 필수
+
+(20) final -> class/method/field     ->  상속 불가 / overriding 불가 / 변경불가
+
+(21) interface class
+     class A implements interface1, interface2 { }    -   다중 구현 가능
+     interface1 extends interface2 {  }  -   껍데기 상속 가능
+     무조건 public method/변수. - 껍데기는 public 으로! (생략해도 java 가 public 으로 만듬)
+     interface 껍데기 - public () {}       //  abstract 껍데기  abstract ();
+
+(22) 다형성 - 하나의 메소드/class 가 다양한 방법으로 동작
+     [1] Overloading 메소드
+     [2] interfacereposit IR = new Memberreposit();
+          < 행세 CLASS >
+              1. 본래 자신인 Memberrepsoit 이 당연히 오거나
+              2. 자신의 Super class 가 온다    =>  Super class 처럼 행세 한다.
+                 ! Super class 에 있는 method 들 사용 가능 (당연하다)
+                 ! Sub class 에만 있는 method 사용 불가능
+                 !
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 999. Acronym
 
-JPA - Java Persistence Api
+GUI - Graphic User Interface
+CLI - Command Line Interface
 
+JPA - Java Persistence Api
 JPQL - Java Persistence Query Language
 
 JDBC - Java DB Connectivity
-
-ORM - Object Relational Mapping
-
-RDB - Realtional DB
 
 SQL - Structured Query Language
 
 DDL - Data Definition Language
 DML - Data Manipulation Language
 DCL - Data Control Language
+
+ORM - Object Relational Mapping
+RDB - Realtional DB
 
 CRUD - Create Read Update Delete
 
