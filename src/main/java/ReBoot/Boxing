@@ -155,16 +155,17 @@ Controller -> [[AOP class -> Proxy 복제 service/repository -> AOP 결과물]] 
 
 (3).replace(A, B)  -  다 완성된 문장따위에서 교환
 
-(4).equals()  -  String 비교
+(4).equals()  -  String 비교  /  객체 비교
 
 (5)Integer.toString() - Int to String Casting
    Integer.parseInt() - String to Int Casting
 
 (6)args[0];  -  configuration - 인자값 순서대로 ( 띄어쓰기로만 구별 ) / main(Stirng[] args) /
 
-(7)switch(x){
+(7) int x = 1 ;
+     switch(x){
 case 1 :    ;break;
-case 2 :    ;beak;
+case 2 :    ;break;
 default : sout("목록에 없습니다"); }
 
 (8) if(  ( A||B||C )  &&  D  )    - ABC 부분 () 로 묶어줘야 함
@@ -174,7 +175,7 @@ default : sout("목록에 없습니다"); }
           if(){break;}  }
 
 (10) Array
-     String[] members = new members[length];
+     String[] members = new members[3];
      members[0] = "Jack";
 
 (11) foreach
@@ -190,16 +191,16 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
 
 (15) static -> method, variables -> class member
 
-     public/private/default/protected -> method, variables -> class/package  +  scope
+     public/private/default/protected -> method, variables
 
      => public static void sum(){}
 
-     class -> public / default  (package)
+     class -> public / default  (패키지공유)
      => public class calculator{}
 
 (16) Overloading - parameter 개수 / data type 에 따라 자동호출 시스템
 
-(17) Overriding - [1] super class 에 생성자 안만들고 sub clss 에서 만들기
+(17) Overriding - [1] super class 에 생성자 안만들고 sub class 에서 만들기
                   [2] 이미 만들었다면 sub 에서 생성자 parameter 까지만 맞추고 super(a,b); 해주면 끝
 
 (18) super
@@ -217,30 +218,111 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
      interface 껍데기 - public () {}       //  abstract 껍데기  abstract ();
 
 (22) 다형성 - 하나의 메소드/class 가 다양한 방법으로 동작
-     [1] Overloading 메소드
-     [2] interfacereposit IR = new Memberreposit();
-          < 행세 CLASS >
+     [1] Overloading 메소드 - 자동호출시스템
+     [2] interfacereposit IR = new Memberreposit();        =>1.필요한것만 꺼내쓰기 2.다른 method 사용 방지 3.Super 로 묶기
+          < 행세 CLASS >            < 원본 CLASS >
               1. 본래 자신인 Memberrepsoit 이 당연히 오거나
               2. 자신의 Super class 가 온다    =>  Super class 처럼 행세 한다.
-                 ! Super class 에 있는 method 들 사용 가능 (당연하다)
-                 ! Sub class 에만 있는 method 사용 불가능
-                 !
+                 ! Super class 에 있는 method 들 사용 가능 (당연하다. 상속관계)
+                 ! Sub 에서 Overriding 된 경우 -> Overriding 된걸 쓴다.
+                 ! Sub class 에만 있는 method -> 사용 불가능 (이게 특이점. 행세)
+               => ( 있는건 Sub 없는건 Super )
 
 
+(22) Exception
+     IllegalArgumentException   -  인자값이 메소드에 적합하지 않음
+     IllegalStateException      -  메소드가 동작할 수 있는 상황을 충족시키지 못함
+     NullPointerException       -  parameter 가 없음 Null
+     ArrayIndexOutOfBoundsException
+     ArithmeticException
+     FileNotFoundException
+
+(23) try{} catch(Exception e){e.getMessage/toString/printStackTrace();}
+                                 간단        자세히      자세히+위치
+     catch(ArrayIndexOutOfBoundsException e){}
+     catch(ArithmeticException e){}
+     catch(Exception e){sout("알수없는 오류");}          <= else 역할
+     finally{ sout("disconnect DB") }
+
+(24) finally (무조건실행)  => try catch 마지막에 사용 - DB 연결 끊어주기
+
+(25) throws 예외던지기
+     public void SUM() throws FileNotFoundException, IOException{ }
+
+(26) throw 예외 생성 (명령문) new
+     public void SUM(int a, int b){
+     if(b==0){throw new IllegalArgumentException("분모가 0일 수 없어요.");} a+b;}
+     try{c1.SUM();}
+     catch(IllegalArgumentException e){sout(e.getMessage());}   -> "분모가 0일 수 없어요."
+
+(27) checked Exception  /  Unchecked Exception
+        예외처리 필수            안해도 됨
+            X               RuntimeException
+    throws / try catch             X
+     IO / FileNotFound    Arithmetic / ArrayIndex
 
 
+(28) .toString     -> 객체를 문자로 표현 ( package 위치, class 이름, 고유번호 )
+     public String toString(){                    <- overriding 해서 사용 가능
+     return super.toString(); sout("라는 객체");}
+
+(29) .clone    -> protected Object clone() throws CloneNotSupportedException{} 기본이 protected
+    overriding -> public Object clone() throws " "{return super.clone();}  ->  접근제어자 바꿔서 쓰자 (Object - 다른 패키지)
+    class student implements Cloneable{
+    try{
+    student s2 = (student) s1.clone();
+    sout(s1.name);  sout(s2.name);}
+    catch(){}
+
+(30) enum  (class)
+     enum Fruit {Apple, Banana, Carrot}
+
+     Fruit A = Fruit.Apple;                 //switch 문 원래 객체 안들어가는데 enum 은 들어감
+     switch(A){
+     case Apple : sout(""); break;
+     case Banana : sout(""); break; }
+
+     if( A == Fruit.Apple ) {sout}
+     else if( A == Fruit.Banana ) {sout}
+
+(31) enum + method
+     enum Fruit {Apple(1), Banana(2), Carrot(3) ;
+[1] ()줄거   -> private rank;
+[2] 꺼낼거   -> public getrank(){return this.rank;}
+[3] 생성자   -> Fruit(int rank){this.rank = rank;}     }
+     Fruit type = Fruit.Apple;
+     switch(type){
+     case Apple : sout("Apple is ranked" + Fruit.Apple.uprank()); }
+
+[+] foreach ( Fruit F : Fruit.values() ) { sout() }        <- .values() 로 enum 객체에 담아서 뽑기
 
 
+(32) Reference DataType (new)
+       a.ID = 1                  직접 값 때려박기      최신정보공유
+     A a = new A(1); A b = a; /      b.ID = 2;      =>참조(o)         a.ID => 2
+     A a = new A(1); A b = a; /  b = new A(2);      =>참조(x)         a.ID => 1
+       a.ID = 1                  새로운 instance      각자정보
 
+(33)  <Generic> -> class 내부에서 사용할 data type 을 나중에 instance 를 생성할 때, 확정 하는 것
+      [1] instance 별로 필요한 data type 으로 바꾸어 class 를 사용할 수 있게 함으로서 코드 중복 방지
+      [2] Type safety - 용도와 맞지않는 data type 이 들어가지 않도록 안전보장
+      [3] generic 은 reference 참조형 date type 만 가능 (기본형 X) -> wrapper class 이용(.IntValue())
 
+class Language { String lang; 생성자 }               // generic 에 넣을 객체
+class engineer<T, S> { public T language; public S age; 생성자 }
+public class { main {
+Language L1 = new Language("java");
+Integer age1 = new Integer(30);
+engineer<Language, Integer> en1 = new engineer(L1, age1);
+sout(en1.L1.lang);
+sout(en1.age1.IntValue());
 
+(34) <Generic> method
+     public <T> void getresult( T result ) {};
+     en1.<Language> getresult( L1 );
 
-
-
-
-
-
-
+(35) <Generic> extends   -   super class 의 자식들로만 datatype 제한
+     class person<T extends superinfo>{ }   -  (generic 은 interface 여도 extends 로 한다)
 
 
 

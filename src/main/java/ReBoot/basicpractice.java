@@ -1,10 +1,6 @@
 package ReBoot;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-        /*System.out.println("Hello BackCoder");
+/*System.out.println("Hello BackCoder");
 
 
 
@@ -141,6 +137,7 @@ public class basicpractice {
         }
         }*/
 
+/*
         class check {
         static int a = 1;
         int b= 2;
@@ -158,18 +155,68 @@ public class basicpractice {
             void ins_ins() {
                 System.out.println(b);}
         }
+*/
+/*
+
+enum Fruit {Apple, Banana, Carrot}
+
+enum Company {
+    Apple(1), Banana(2), Carrot(3);
+
+*/
+
+/*
+    private int rank;
+
+    public int uprank() {
+        return this.rank;}
+
+    Company(int rank){
+        this.rank = rank;
+    }
+}
+*/
+class name {
+    String usinglanguage;
+
+    public name(String usinglanguage){
+        this.usinglanguage = usinglanguage;
+    }
+}
+
+
+class company<T, S>{
+    public T name;
+    public S rank;
+
+    public company(T name, S rank){
+        this.name = name;
+        this.rank = rank;}
+}
+
+
 
 public class basicpractice{
     public static void main(String[] args) {
-        //calcul.sum(3, 6 );   - static 필요
+        name name1 = new name("java");
+        Integer ranking = new Integer(1);
+
+        company<name, Integer> c1 = new company<>(name1, ranking );
+
+        System.out.println(c1.name.usinglanguage);
+
+        System.out.println(c1.rank.intValue());
 
 
-        check.sum(10, 20);
-        check c1 = new check();
+    }
+}
 
-        check.sta_sta();
-        c1.ins_ins();
-        c1.ins_sta();
+
+
+
+
+
+
 
 
 
@@ -178,8 +225,67 @@ public class basicpractice{
 
 
         //
-    }
-    }
+
+/*
+        Company type = Company.Apple;
+        switch (type){
+            case Apple:
+                System.out.println("Apple is ranked "+Company.Apple.uprank());break;
+            case Banana:
+                System.out.println("Banana is ranked "+Company.Banana.uprank());break;
+            case Carrot:
+                System.out.println("Carrot is ranked "+Company.Carrot.uprank());break;
+
+            default: break;
+
+        }
+
+        for ( Company companylist: Company.values()
+             ) {
+            System.out.println( companylist +"  ranked  " + companylist.uprank());
+
+        }*/
+
+
+
+        /*
+
+        Fruit A = Fruit.Banana;
+        switch (A){
+            case Apple:
+                System.out.println("Apple!"); break;
+            case Banana:
+                System.out.println("Banana!");break;
+            case Carrot:
+                System.out.println("Carrot!");break;
+        }
+*/
+
+
+
+
+
+
+
+
+
+        //calcul.sum(3, 6 );   - static 필요
+
+
+/*
+        check.sum(10, 20);
+        check c1 = new check();
+
+        check.sta_sta();
+        c1.ins_ins();
+        c1.ins_sta();
+
+*/
+
+
+
+
+        //
 
 
 
