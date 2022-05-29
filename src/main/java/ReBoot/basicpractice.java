@@ -165,6 +165,10 @@ enum Company {
 
 */
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.SQLOutput;
+import java.util.*;
+
 /*
     private int rank;
 
@@ -175,7 +179,7 @@ enum Company {
         this.rank = rank;
     }
 }
-*/
+*//*
 class name {
     String usinglanguage;
 
@@ -183,7 +187,8 @@ class name {
         this.usinglanguage = usinglanguage;
     }
 }
-
+*/
+/*
 
 class company<T, S>{
     public T name;
@@ -193,12 +198,245 @@ class company<T, S>{
         this.name = name;
         this.rank = rank;}
 }
+*/
 
 
 
-public class basicpractice{
-    public static void main(String[] args) {
-        name name1 = new name("java");
+//public class basicpractice{
+    /*static void iteratorUsingIterator(HashMap map) {
+        Set<HashMap.Entry<String, Integer>> entries = map.entrySet();    //마찬가지로 entrySet() 메소드 이용 entries 에 담고
+        Iterator<HashMap.Entry<String, Integer>> i = entries.iterator();  // iterator() 메소드로 출력한 값들을 (entries)
+
+
+        while (i.hasNext()) {
+            System.out.println(i.next());
+        }}*/
+/*
+    static void foreachiterator(HashMap mep){
+        Set A = mep.entrySet();
+        Iterator i = A.iterator();
+
+        while (i.hasNext()){
+            System.out.println(i.next());
+        }
+
+    }*/
+
+
+
+
+/*
+
+        while (i.hasNext()){Map.Entry<String, Integer> entry = i.next();    // i 를 hasNext 와 next 로 출력한다.
+            System.out.println(entry.getKey() + ":" + entry.getValue()); }
+*/
+
+/*
+
+    static void IteratorUsingiterator(HashMap map){
+        Set<Map.Entry<Integer, String>> getmap = map.entrySet();
+        Iterator<Map.Entry<Integer, String>> gm = getmap.iterator();
+        while (gm.hasNext()){Map.Entry<Integer, String> B = gm.next();
+            System.out.println(B.getKey() + ":" + B.getValue());
+        }
+
+    }
+*/
+
+
+  /*      public static void main(String[] args) {
+
+
+            HashMap<Integer, String> A = new HashMap<>();
+
+            A.put(1, "Apple");
+            A.put(2, "Banana");
+            A.put(3, "Carrot");
+
+            System.out.println("바로" + A.get(2));
+            for (String fruits: A.values()
+                 ) {
+                System.out.println(fruits);}
+
+
+*/
+/*
+
+            Iterator FE = (Iterator) A.values().iterator();
+            while (FE.hasNext()){
+                System.out.println(FE.next());
+            }
+
+
+            IteratorUsingiterator(A);
+
+
+*/
+
+
+//            iteratorUsingIterator(A);
+
+//            foreachiterator(A);
+
+
+
+
+
+class computer implements Comparable {                   // .sort 사용하려면 필수조건
+    int number;
+    String owner;
+    computer(int number, String owner) {
+        this.number = number;
+        this.owner = owner;
+    }
+    public int compareTo(Object o) {                       // Comparable 인터페이스를 implements 하면
+        return this.number - ((computer) o).number;        // 필수적으로 compareTo 를 구현해야함
+    }                                                   // A.compareTo(B) => 양수 > / 음수 < / 0 =
+    // this.number = A
+    // ((computer) o) = Object o  <= 괄호로 두번 묶어준다 (일단 알아두자)
+    public String toString() {                       //overriding 해서 써먹을 method 로 정의.
+        return number + "" + owner;
+    }
+}
+public class basicpractice {
+    public static void main(String[] args) {                  //ArrayList al = new ArrayList();  기본형
+        List<computer> comp = new ArrayList<computer>();      // 객체 computer 를 Data type 으로 쓸 수 있다.
+        comp.add(new computer(500, "June"));    // 객체 computer 를 ArrayList 로 만듬
+        comp.add(new computer(200, "Tom"));    // 객체를 .add 할때는 "new 객체()" 로 해줘야 하네.
+        comp.add(new computer(1000, "Luna"));
+        System.out.println(comp.toString());              // 정렬 안됨
+
+
+
+
+        Collections.sort(comp);
+
+
+
+        System.out.println(comp.toString());             //정렬 된 값으로 출력
+
+        Iterator i = comp.iterator();
+        while (i.hasNext()){
+            System.out.println(i.next());
+        }
+
+
+    }
+}
+
+        //System.out.println(A.get(2));
+
+/*
+        for (String Fuit: A.values()
+             ) {
+            System.out.println(Fuit);}
+*/
+
+
+        /*
+        Iterator FE = (Iterator) A.values().iterator();
+        while(FE.hasNext()){
+            System.out.println(FE.next());
+        }*/
+
+
+
+
+
+        /*
+
+        HashSet<Integer> A = new HashSet<>();
+        A.add(10);
+        A.add(20);
+        A.add(30);
+
+        HashSet<Integer> B = new HashSet<>();
+        B.add(30);
+        B.add(40);
+
+        ArrayList<Integer> C = new ArrayList<>();
+        C.add(10);
+        C.add(20);
+*/
+
+        /*for (Integer age: A
+             ) {
+            System.out.println("User age : " + age);
+        }
+            System.out.println(A.containsAll(B));
+            System.out.println(A.containsAll(C));
+
+        Iterator FE = (Iterator) A.iterator();
+        while (FE.hasNext()){
+            System.out.println(FE.next());}
+
+
+        System.out.println(A.size());
+*/
+
+        /*A.addAll(B);
+        System.out.println(A.size());
+
+        Iterator adl = (Iterator) A.iterator();
+        while (adl.hasNext()){
+            System.out.println(adl.next());}
+
+        */
+  /*      A.removeAll(C);
+        Iterator reA = (Iterator) A.iterator();
+        while (reA.hasNext()){
+            System.out.println(reA.next());}
+*/
+/*
+
+        A.retainAll(B);
+        Iterator FE = (Iterator) A.iterator();
+        while (FE.hasNext()){
+            System.out.println(FE.next());}
+
+        System.out.println(A.size());
+*/
+//        A.retainAll(C);
+/*
+        Iterator FE = (Iterator) A.iterator();
+        while (FE.hasNext()){
+            System.out.println(FE.next());}
+*/
+
+/*
+        for (Integer age : A
+             ) {
+            System.out.println(age);
+
+        }
+
+        System.out.println(A.size());
+
+
+*/
+        //(A.addAll(B)
+        //(A.addAll(B));
+
+
+
+        /*ArrayList<String> al = new ArrayList<String>();
+
+        al.add("Apple");
+        al.add("Banana");
+        al.add("Carrot");
+
+        String Fruit = al.get(2);
+        System.out.println(Fruit);
+
+        for (String Fruits:al) {
+            System.out.println("Fruits are : " + Fruits);}
+
+*/
+
+
+
+
+        /*name name1 = new name("java");
         Integer ranking = new Integer(1);
 
         company<name, Integer> c1 = new company<>(name1, ranking );
@@ -207,9 +445,10 @@ public class basicpractice{
 
         System.out.println(c1.rank.intValue());
 
+        */
 
-    }
-}
+
+
 
 
 

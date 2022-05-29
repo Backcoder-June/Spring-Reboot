@@ -170,7 +170,7 @@ default : sout("목록에 없습니다"); }
 
 (8) if(  ( A||B||C )  &&  D  )    - ABC 부분 () 로 묶어줘야 함
 
-(9) for(){if(){continue;}            <- 그 부분만 띄어넘고 계속 진행해
+(9) for(){if(){continue;}            <- 그 부분만 띄어넘고 계속 진행, 앞에다 줘야함
           sout();
           if(){break;}  }
 
@@ -213,9 +213,9 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
 
 (21) interface class
      class A implements interface1, interface2 { }    -   다중 구현 가능
-     interface1 extends interface2 {  }  -   껍데기 상속 가능
+     interface1 extends interface2 {  }  -   껍데기 끼리 상속 가능
      무조건 public method/변수. - 껍데기는 public 으로! (생략해도 java 가 public 으로 만듬)
-     interface 껍데기 - public () {}       //  abstract 껍데기  abstract ();
+     interface 껍데기 - public interface A { (public) void sum(); }
 
 (22) 다형성 - 하나의 메소드/class 가 다양한 방법으로 동작
      [1] Overloading 메소드 - 자동호출시스템
@@ -311,8 +311,8 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
 class Language { String lang; 생성자 }               // generic 에 넣을 객체
 class engineer<T, S> { public T language; public S age; 생성자 }
 public class { main {
-Language L1 = new Language("java");
-Integer age1 = new Integer(30);
+T : Language L1 = new Language("java");
+S : Integer age1 = new Integer(30);
 engineer<Language, Integer> en1 = new engineer(L1, age1);
 sout(en1.L1.lang);
 sout(en1.age1.IntValue());
@@ -324,10 +324,77 @@ sout(en1.age1.IntValue());
 (35) <Generic> extends   -   super class 의 자식들로만 datatype 제한
      class person<T extends superinfo>{ }   -  (generic 은 interface 여도 extends 로 한다)
 
+(36) ArrayList          -> .add() / .get([index])
+     ArrayList<String> al = new ArrayList<String>();
+     al.add("Apple");
+     al.add("Banana");
+
+     String Fruit = al.get(1); sout(Fruit);
+     foreach(String Fruits : al) {sout("Fruits are : " + Fruits); }
+
+(37) HashSet         집합 -> .add() / .addAll() / .removeAll() / .retainAll() / .clear()
+     A.addAll(B);   -> foreach(Integer age : A){sout(age);}
+
+(38) Iterator             =  foreach
+     Iterator FE = (Iterator) A.iterator();
+     while(FE.hasNext()){sout(FE.next());}
+
+(39) HashMap
+     HashMap<Integer, String> A = new HashMap<Integer, String>();
+     A.put(1, "Apple");
+     A.put(2, "Banana");
+     sout(A.get(2));
+
+     [1] Value 값만 뽑으면 될 때  ->   .values()        // HashMap 은 para 가 두개라 values 로 뽑아야한다
+     for(String Fruit : A.values()){sout(Fruit);}
+     Iterator FR = (Iterator) A.values().iterator();
+     while(FR.hasNext()){sout(FR.next());}
+
+     [2] Key값=Value 로 뽑을 때   -> Set/ Map.Entity / map.entitySet();
+     static void IterUsingiter(HashMap map) {
+     Set<Map.Entity<Integer, String>> A = map.entitySet();
+     Iterator<Map.Entity<Interger, String>> getmap = (Iterator) A.iterator();
+     while(getmap.hasNext()){sout(getmap.next();}        }
+
+     [3] getKey() / getValue() 로 조작해서 뽑을 때
+      while (getmap.hasNext()){Map.Entry<Integer, String> B = getmap.next();
+                 System.out.println(B.getKey() + ":" + B.getValue());
 
 
 
+(40)  .sort()    <-  implements Comparable / compareTo(Object a) / Collections.sort(c1);
+class computer implements Comparable {                            // Comparable
+    int number;
+    String owner;
+    computer(int number, String owner) {
+        this.number = number;
+        this.owner = owner;}
+    public int compareTo(Object o) {
+        return this.number - ((computer) o).number; }            // A.compareTo(B) => 양수 > / 음수 < / 0 == /
 
+public class framework01 {
+    public static void main(String[] args) {
+        List<computer> comp = new ArrayList<computer>();
+        comp.add(new computer(500, "June"));                   // 객체 .add => "new 객체()"
+        comp.add(new computer(200, "Tom"));
+        comp.add(new computer(1000, "Luna"));
+
+        Iterator i = comp.iterator();
+        while (i.hasNext()){
+        System.out.println(i.next());}                      -> 500 200 1000 그냥 순서
+
+        Collections.sort(comp);                                //Collections.sort(c1);
+
+        Iterator j = comp.iterator();
+        while (j.hasNext()){
+        System.out.println(j.next());}                      -> 200 500 1000 sort 정렬 순서
+
+(+)    .toString           <-  Overriding 해서 써먹으면 바로 뽑아볼 수 있다. return
+        public String toString() {
+        return number + "" + owner;  }     }
+
+
+(41)
 
 
 
