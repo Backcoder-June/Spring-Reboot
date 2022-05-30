@@ -4,6 +4,7 @@ package ReBoot;
 //import ReBoot.AOP.TimetraceAOP;
 import ReBoot.Memberrepository.interfacerepository;
 import ReBoot.Memberservice.Memberservice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,9 +14,9 @@ public class SpringConfig {
     //spring data JPa config - 바로 service - repository 연결
     private final interfacerepository interfaceRepository;
 
-    public SpringConfig(interfacerepository interfaceRepository) {
-        this.interfaceRepository = interfaceRepository;
-    }
+    @Autowired
+    public SpringConfig(interfacerepository interfaceRepository)
+    {this.interfaceRepository = interfaceRepository;}
 
     @Bean
     Memberservice memberservice(){

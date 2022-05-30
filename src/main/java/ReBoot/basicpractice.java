@@ -165,10 +165,6 @@ enum Company {
 
 */
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.sql.SQLOutput;
-import java.util.*;
-
 /*
     private int rank;
 
@@ -229,20 +225,21 @@ class company<T, S>{
 
         while (i.hasNext()){Map.Entry<String, Integer> entry = i.next();    // i 를 hasNext 와 next 로 출력한다.
             System.out.println(entry.getKey() + ":" + entry.getValue()); }
-*/
+*//*
+class methods {
 
-/*
 
-    static void IteratorUsingiterator(HashMap map){
+    static void IteratorUsingiterator(HashMap map) {
         Set<Map.Entry<Integer, String>> getmap = map.entrySet();
         Iterator<Map.Entry<Integer, String>> gm = getmap.iterator();
-        while (gm.hasNext()){Map.Entry<Integer, String> B = gm.next();
+        while (gm.hasNext()) {
+            Map.Entry<Integer, String> B = gm.next();
             System.out.println(B.getKey() + ":" + B.getValue());
         }
 
     }
-*/
 
+}*/
 
   /*      public static void main(String[] args) {
 
@@ -278,6 +275,7 @@ class company<T, S>{
 
 //            foreachiterator(A);
 
+/*
 
 
 
@@ -289,8 +287,8 @@ class computer implements Comparable {                   // .sort 사용하려�
         this.number = number;
         this.owner = owner;
     }
-    public int compareTo(Object o) {                       // Comparable 인터페이스를 implements 하면
-        return this.number - ((computer) o).number;        // 필수적으로 compareTo 를 구현해야함
+    public int compareTo(Object A) {                       // Comparable 인터페이스를 implements 하면
+        return this.number - ((computer) A).number;        // 필수적으로 compareTo 를 구현해야함
     }                                                   // A.compareTo(B) => 양수 > / 음수 < / 0 =
     // this.number = A
     // ((computer) o) = Object o  <= 괄호로 두번 묶어준다 (일단 알아두자)
@@ -323,6 +321,7 @@ public class basicpractice {
 
     }
 }
+*/
 
         //System.out.println(A.get(2));
 
@@ -338,6 +337,132 @@ public class basicpractice {
         while(FE.hasNext()){
             System.out.println(FE.next());
         }*/
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.*;
+/*
+
+class studentsdata implements Comparable {
+
+    int age;
+    String name;
+
+    public studentsdata(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+    public int compareTo(Object s1) {
+
+        return this.age - ((studentsdata) s1).age;  }
+
+    public String toString(){
+        return age + " " +  name ;
+    }
+
+
+}
+*/
+/*
+
+class getdata {
+
+    static void Usingiterator(HashMap map){
+
+        Set<Map.Entry<Integer, String>> SS = map.entrySet();
+        Iterator<Map.Entry<Integer, String>> dt = SS.iterator();
+        while (dt.hasNext()){Map.Entry<Integer,String> Sdt= dt.next();
+            System.out.println( Sdt.getValue() + "학생의 나이는 " + Sdt.getKey() + "세 입니다.");                          }
+
+    }
+}
+*/
+/*
+public class basicpractice{
+    static void Usingiterator(HashMap map){
+
+        Set<Map.Entry<Integer, String>> SS = map.entrySet();
+        Iterator<Map.Entry<Integer, String>> dt = SS.iterator();
+        while (dt.hasNext()){Map.Entry<Integer,String> Sdt= dt.next();
+            System.out.println( Sdt.getValue() + "학생의 나이는 " + Sdt.getKey() + "세 입니다."); }
+    }
+
+
+
+
+
+    public static void main(String[] args) {
+
+
+        HashMap<Integer, String> classmembers = new HashMap<>();
+
+        classmembers.put(13, "Jack");
+        classmembers.put(15, "Jane");
+        classmembers.put(17, "Tom");
+
+        Usingiterator(classmembers);
+        System.out.println(classmembers.toString());
+
+        List<studentsdata> L1 = new ArrayList<studentsdata>();
+
+        L1.add(new studentsdata(19, "Jhon"));
+        L1.add(new studentsdata(13, "Cap"));
+        L1.add(new studentsdata(17, "Tomas"));
+
+//        System.out.println("그냥 tostring : "+L1.toString());
+
+        *//*
+        Iterator i2 = (Iterator) L1.iterator();
+        while (i2.hasNext()){
+            System.out.println(i2.next());}
+*//*
+
+        System.out.println(L1.toString());
+
+
+        Collections.sort(L1);
+
+        System.out.println(L1.toString());
+
+
+
+        *//*
+
+        Iterator i3 = (Iterator) L1.iterator();
+        while (i3.hasNext()){
+            System.out.println(i3.next());}
+
+*//*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //
+    }
+}*/
+
+
+
 
 
 
@@ -706,7 +831,6 @@ public class basicpractice{
 
 
 //
-
 
 
 

@@ -42,7 +42,7 @@ localhost:8080/url?promise=whatever
 (1) domain 생성 - 다 가져다쓸 class, Name, Id
 (2) interface repository 생성  - save, findbyid, findbyname, findall 만들 기본 기술들
 (3) 구현체 repository 생성 - 위에거만 구현
-(4) service 생성 - 기본 기술들 활용해서 service 로 사용할 큼지막한 기술 join, findmembers구현
+(4) service 생성 - 기본 기술들 활용해서 service 로 사용할 큼지막한 기술 join, findmembers 등 구현
 (5) Controller - 화면 구현 View 하고 연결 (Template)
                  service의 기술들 join, findmembers 을 화면별로 적용(url 이용)
 (6) @Component(@Service,Repository) / Config @Bean  둘중 하나 사용해서 Spring container 연결(DI)
@@ -79,6 +79,55 @@ localhost:8080/url?promise=whatever
  끝
 
 
+< 회원 예제 details >
+Domain - name, id 는 꺼내서 쓸거니까 private 로 준다. -> getter / setter
+
+interface reposit - save, find, 기능들은 다 domain 의 name id 를 가져다 쓰는거니까 domian 객체 자체를 datatype 으로 한다
+                  - null 값 나올 기능엔 Optional<Member> 로 한다.
+                  - findAll 은 List<Member> 로 뽑는다. =new ArrayList
+
+Member reposit - sequence / HashMap 은 함부로 손대면 안되고, 꺼내서 쓰는것이므로 private static
+
+Member Service - Join, findmembers 같은 기능들 public 으로하고 return type 생각해서 Long, List 등으로
+
+               - Join 안에 중복방지메소드는 꺼내쓸거니까 private, error 만 던질거니까 void
+
+               - reposit 하고 연결할 땐, private final   - 연결부를 꽉 조이는 느낌
+
+Member Controller - service 하고 연결할 땐, private final
+
+                  - @Mapping 할땐 다 public String 으로
+
+                  - @PostMapping 할땐 유저가 input 한걸 받을 form class 를 따로 만들어줘야됨. 그걸 domain name 하고 연결시켜서 씀
+
+                  - findmembers 받을 땐, List로 받아야 되므로, value 값이 생김 => Model !
+                    public String 으로 맵핑한거에서 Model 로 List 값을 value 로 받아서 htmlkey 로 뿌림
+
+연결 - [1] 기본 Memory 에 저장 할 때
+      1. Component Scan
+       (1) @Repository
+       (2) @Service / @Autowired
+       (3) @Controller / @Autowired
+
+     2. Configuration - Bean
+       (1) X
+       (2) X
+       (3) O
+       (4) @Bean public Memberservice memberservice(){return new Memberserevce(interfacereposit);}
+       (5) @Bean public Interfacereposit interfacereposit(){return new Memberreposit();}
+
+      3. JPA - configuration
+       (6) private EntityManager em; @Autowried 생성자;
+           @Bean Memberservice return new Memberservice(interfaceroposit);
+           @Bean Interfacereposit return new JPAreposit(em);
+
+       (7) Spring data JPA -> private final Interfacereposit interfacereposit; @Autowired 생성자
+                              @Bean public Memberservice membeservice(){return new MS(interfacereposit);}
+
+
+
+
+
 7. AOP class 만들기 ( cross-cutting concern / core concern )
 (1) AOP package 만들고 원하는 공통관심사항 class 생성
 (2) class 에 @Aspect  <- AoP class 임을 알려줌
@@ -88,6 +137,9 @@ localhost:8080/url?promise=whatever
  끝
 
 Controller -> [[AOP class -> Proxy 복제 service/repository -> AOP 결과물]] -> 진짜 service/repository  진행
+
+
+
 
 
 8. test case 만들기
@@ -114,8 +166,8 @@ Controller -> [[AOP class -> Proxy 복제 service/repository -> AOP 결과물]] 
 (4) 확실한 test 를 짜보기 (Boolean / Assertthat) - //given  //when //then
     assertthat(x).isEqualto(y);        => 작동시 같다는 의미.
 
-(5) clearman 만들기 - 실험하는 해당 계층 class 에
-    public void clearmain() { store.clear();} -> AfterEach 와 연계
+(5) clearman 만들기 - (repository)   ->  실험하는 test 에 AfterEach 와 연계
+    public void clearman(){store.clear();}
     Test class 에
     @AfterEach
     public void aftech(){ A.clearman();}
@@ -190,6 +242,7 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
      Scanner parrot = new Sacnner(fi);
 
 (15) static -> method, variables -> class member
+     static class ->  정적 내부 클래스
 
      public/private/default/protected -> method, variables
 
@@ -197,6 +250,7 @@ for( String 새로운변수 : 돌릴배열집합 ) {sout(새로운변수)}      
 
      class -> public / default  (패키지공유)
      => public class calculator{}
+
 
 (16) Overloading - parameter 개수 / data type 에 따라 자동호출 시스템
 
@@ -335,11 +389,11 @@ sout(en1.age1.IntValue());
 (37) HashSet         집합 -> .add() / .addAll() / .removeAll() / .retainAll() / .clear()
      A.addAll(B);   -> foreach(Integer age : A){sout(age);}
 
-(38) Iterator             =  foreach
+(38) Iterator              ->  iterator() / .hasNext() / .next()
      Iterator FE = (Iterator) A.iterator();
      while(FE.hasNext()){sout(FE.next());}
 
-(39) HashMap
+(39) HashMap               -> .put() / .get(key값) / .values()
      HashMap<Integer, String> A = new HashMap<Integer, String>();
      A.put(1, "Apple");
      A.put(2, "Banana");
@@ -350,10 +404,10 @@ sout(en1.age1.IntValue());
      Iterator FR = (Iterator) A.values().iterator();
      while(FR.hasNext()){sout(FR.next());}
 
-     [2] Key값=Value 로 뽑을 때   -> Set/ Map.Entity / map.entitySet();
+     [2] Key값=Value 로 뽑을 때   -> Set/ Map.Entry / map.entrySet();
      static void IterUsingiter(HashMap map) {
-     Set<Map.Entity<Integer, String>> A = map.entitySet();
-     Iterator<Map.Entity<Interger, String>> getmap = (Iterator) A.iterator();
+     Set<Map.Entry<Integer, String>> A = map.entrySet();
+     Iterator<Map.Entry<Interger, String>> getmap = (Iterator) A.iterator();
      while(getmap.hasNext()){sout(getmap.next();}        }
 
      [3] getKey() / getValue() 로 조작해서 뽑을 때
@@ -362,15 +416,20 @@ sout(en1.age1.IntValue());
 
 
 
-(40)  .sort()    <-  implements Comparable / compareTo(Object a) / Collections.sort(c1);
+(40) .sort(List L1)    <-  implements Comparable / compareTo(Object a) / Collections.sort(c1);
 class computer implements Comparable {                            // Comparable
     int number;
     String owner;
     computer(int number, String owner) {
         this.number = number;
         this.owner = owner;}
-    public int compareTo(Object o) {
-        return this.number - ((computer) o).number; }            // A.compareTo(B) => 양수 > / 음수 < / 0 == /
+    public int compareTo(Object c1) {
+        return this.number - ((computer) c1).number; }            // A.compareTo(B) => 양수 > / 음수 < / 0 == /
+
+(+) .toString                                             <- return 으로 뽑을 메소드 필요 - Overriding
+        public String toString() {
+        return number + "" + owner;  }     }
+
 
 public class framework01 {
     public static void main(String[] args) {
@@ -379,19 +438,12 @@ public class framework01 {
         comp.add(new computer(200, "Tom"));
         comp.add(new computer(1000, "Luna"));
 
-        Iterator i = comp.iterator();
-        while (i.hasNext()){
-        System.out.println(i.next());}                      -> 500 200 1000 그냥 순서
+        sout(comp.toString());                                -> 500 200 1000 그냥 순서
 
         Collections.sort(comp);                                //Collections.sort(c1);
 
-        Iterator j = comp.iterator();
-        while (j.hasNext()){
-        System.out.println(j.next());}                      -> 200 500 1000 sort 정렬 순서
+        sout(comp.toString());                                -> 200 500 1000 sort 정렬 순서
 
-(+)    .toString           <-  Overriding 해서 써먹으면 바로 뽑아볼 수 있다. return
-        public String toString() {
-        return number + "" + owner;  }     }
 
 
 (41)
